@@ -1,5 +1,9 @@
 # FoundIt — Community Lost & Found Board
 
+## Live Demo
+
+https://temporary-swift-dune-0529hzk.vercel.app
+
 FoundIt is a responsive community board that helps lost belongings find their way home. Visitors can browse local reports, search and filter the collection, publish a lost or found item, and mark a successful match as resolved. The application is intentionally frontend-only and saves its state in the browser.
 
 ## Live project
