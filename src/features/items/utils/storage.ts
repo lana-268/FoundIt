@@ -10,23 +10,19 @@ const isItemArray = (value: unknown): value is Item[] => Array.isArray(value) &&
 });
 
 export const loadItems = (): Item[] => {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(mockItems));
-      return mockItems;
-    }
-    const parsed: unknown = JSON.parse(stored);
-    if (!isItemArray(parsed)) return mockItems;
-    const migrated = parsed.map((item) => {
-      const starterItem = mockItems.find((entry) => entry.id === item.id);
-      return starterItem ? { ...starterItem, ...item } : item;
-    });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
-    return migrated;
-  } catch {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(mockItems));
     return mockItems;
   }
+  const parsed: unknown = JSON.parse(stored);
+  if (!isItemArray(parsed)) throw new Error('Stored item data is invalid.');
+  const migrated = parsed.map((item) => {
+    const starterItem = mockItems.find((entry) => entry.id === item.id);
+    return starterItem ? { ...starterItem, ...item } : item;
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+  return migrated;
 };
 
 export const saveItems = (items: Item[]): void => localStorage.setItem(STORAGE_KEY, JSON.stringify(items));

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { loadItems, saveItems } from '../utils/storage';
 import type { Item } from '../types/item';
 
@@ -40,9 +40,3 @@ export function ItemsProvider({ children }: { children: ReactNode }) {
 
   return <ItemsContext.Provider value={value}>{children}</ItemsContext.Provider>;
 }
-
-export const useItems = (): ItemsContextValue => {
-  const context = useContext(ItemsContext);
-  if (!context) throw new Error('useItems must be used inside ItemsProvider');
-  return context;
-};
